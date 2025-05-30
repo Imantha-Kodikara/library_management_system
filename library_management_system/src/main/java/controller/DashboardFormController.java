@@ -55,7 +55,13 @@ public class DashboardFormController {
 
     @FXML
     void btnAddBookOnClick(ActionEvent event) {
-
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/add_book_form_view.fxml"))));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -63,6 +69,7 @@ public class DashboardFormController {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/add_user_form_view.fxml"))));
+            stage.setTitle("Add User");
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

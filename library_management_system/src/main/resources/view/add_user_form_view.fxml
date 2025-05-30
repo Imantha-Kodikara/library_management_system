@@ -8,7 +8,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddUserFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#021f3b" height="69.0" layoutY="-10.0" stroke="#290b8e" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
@@ -18,11 +17,11 @@
          </font>
       </Label>
       <JFXTextField fx:id="txtUserId" layoutX="144.0" layoutY="106.0" prefHeight="26.0" prefWidth="126.0" promptText="User ID" />
-      <JFXTextField fx:id="txtFirstName" layoutX="144.0" layoutY="141.0" prefHeight="26.0" prefWidth="310.0" promptText="User ID" text="First Name" />
-      <JFXTextField fx:id="txtLastName" layoutX="144.0" layoutY="176.0" prefHeight="26.0" prefWidth="310.0" promptText="User ID" text="Last Name" />
-      <JFXTextField fx:id="txtAddress" layoutX="144.0" layoutY="203.0" prefHeight="26.0" prefWidth="310.0" promptText="User ID" text="Address" />
-      <JFXTextField fx:id="txtEmail" layoutX="144.0" layoutY="231.0" prefHeight="26.0" prefWidth="310.0" promptText="User ID" text="Email" />
-      <JFXTextField fx:id="txtContactNumber" layoutX="144.0" layoutY="264.0" prefHeight="26.0" prefWidth="202.0" promptText="User ID" text="Contact Number" />
+      <JFXTextField fx:id="txtFirstName" layoutX="144.0" layoutY="141.0" prefHeight="26.0" prefWidth="310.0" promptText="First Name" />
+      <JFXTextField fx:id="txtLastName" layoutX="144.0" layoutY="176.0" prefHeight="26.0" prefWidth="310.0" promptText="Last Name" />
+      <JFXTextField fx:id="txtAddress" layoutX="144.0" layoutY="203.0" prefHeight="26.0" prefWidth="310.0" promptText="Address" />
+      <JFXTextField fx:id="txtEmail" layoutX="144.0" layoutY="231.0" prefHeight="26.0" prefWidth="310.0" promptText="Email" />
+      <JFXTextField fx:id="txtContactNumber" layoutX="144.0" layoutY="264.0" prefHeight="26.0" prefWidth="202.0" promptText="Contact Number" />
       <JFXButton layoutX="391.0" layoutY="334.0" onAction="#btnAddOnClick" prefHeight="26.0" prefWidth="52.0" style="-fx-background-color: #290b8e;" text="Add" textFill="WHITE" />
       <JFXButton layoutX="454.0" layoutY="334.0" onAction="#btnClearOnClick" prefHeight="26.0" prefWidth="52.0" style="-fx-background-color: red;" text="Clear" textFill="WHITE" />
       <DatePicker fx:id="dateMembershipDate" layoutX="144.0" layoutY="308.0" promptText="Membership Date" />

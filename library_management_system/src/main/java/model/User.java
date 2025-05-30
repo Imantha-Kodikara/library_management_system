@@ -2,6 +2,7 @@ package model;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -15,5 +16,5 @@ public class User {
     private String address;
     private String email;
     private String contactNumber;
-    private Date membershipDate;
+    private LocalDate membershipDate;
 }

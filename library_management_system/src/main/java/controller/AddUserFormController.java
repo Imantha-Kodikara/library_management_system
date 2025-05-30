@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import model.User;
 import util.CrudUtil;
 
 import java.net.URL;
@@ -45,9 +46,17 @@ public class AddUserFormController implements Initializable {
     @FXML
     void btnAddOnClick(ActionEvent event) {
         if(isFilled() && isValidContactNumber()){
+            User user = new User(
+                    txtFirstName.getText(),
+                    txtLastName.getText(),
+                    txtAddress.getText(),
+                    txtEmail.getText(),
+                    txtContactNumber.getText(),
+                    dateMembershipDate.getValue()
+            );
             try {
                 Boolean isAdded = CrudUtil.execute("INSERT INTO users(first_name, last_name, address, email, contact_number, membership_date) VALUES(?, ?, ?, ?, ?, ?)",
-                        txtFirstName.getText(), txtLastName.getText(), txtAddress.getText(), txtEmail.getText(), txtContactNumber.getText(), dateMembershipDate.getValue());
+                        user.getFirstName(), user.getLastName(), user.getAddress(), user.getEmail(), user.getContactNumber(), user.getMembershipDate());
 
                 if (isAdded){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "User Added Successfully!");
@@ -113,11 +122,11 @@ public class AddUserFormController implements Initializable {
     //------------------------------Clearing Text Fields----------------------------------
 
     public void clearTextFields(){
-        txtFirstName.setText("First Name");
-        txtLastName.setText("Last Name");
-        txtAddress.setText("Address");
-        txtEmail.setText("Email");
-        txtContactNumber.setText("Contact Number");
+        txtFirstName.setText("");
+        txtLastName.setText("");
+        txtAddress.setText("");
+        txtEmail.setText("");
+        txtContactNumber.setText("");
         txtUserId.setText("User ID : "+getNextUserId());
     }
 }
