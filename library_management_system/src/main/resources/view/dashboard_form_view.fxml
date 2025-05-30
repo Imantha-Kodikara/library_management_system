@@ -42,67 +42,67 @@
             <Font name="Times New Roman" size="29.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnAddBook" layoutX="334.0" layoutY="175.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Add Book">
+      <JFXButton fx:id="btnAddBook" layoutX="334.0" layoutY="175.0" onAction="#btnAddBookOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Add Book">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnUpdateBook" layoutX="334.0" layoutY="238.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Update Book">
+      <JFXButton fx:id="btnUpdateBook" layoutX="334.0" layoutY="238.0" onAction="#btnUpdateBookOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Update Book">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnDeleteBook" layoutX="334.0" layoutY="300.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Delete Book">
+      <JFXButton fx:id="btnDeleteBook" layoutX="334.0" layoutY="300.0" onAction="#btnDeleteBookOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Delete Book">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnSearchBook" layoutX="334.0" layoutY="361.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Search Book">
+      <JFXButton fx:id="btnSearchBook" layoutX="334.0" layoutY="361.0" onAction="#btnSearchBookOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Search Book">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnAddUser" layoutX="58.0" layoutY="175.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Add User">
+      <JFXButton fx:id="btnAddUser" layoutX="58.0" layoutY="175.0" onAction="#btnAddUserOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Add User">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnUpdateUser" layoutX="58.0" layoutY="238.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Update User">
+      <JFXButton fx:id="btnUpdateUser" layoutX="58.0" layoutY="238.0" onAction="#btnUpdateUserOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Update User">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnDeleteUser" layoutX="58.0" layoutY="300.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Delete User">
+      <JFXButton fx:id="btnDeleteUser" layoutX="58.0" layoutY="300.0" onAction="#btnDeleteUserOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Delete User">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnSearchUser" layoutX="61.0" layoutY="361.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Search User">
+      <JFXButton fx:id="btnSearchUser" layoutX="61.0" layoutY="361.0" onAction="#btnSearchUserOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Search User">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnIssueBook" layoutX="334.0" layoutY="422.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Issue Book">
+      <JFXButton fx:id="btnIssueBook" layoutX="334.0" layoutY="422.0" onAction="#btnIssueBookOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Issue Book">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnReturnBook" layoutX="334.0" layoutY="481.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Return Book">
+      <JFXButton fx:id="btnReturnBook" layoutX="334.0" layoutY="481.0" onAction="#btnReturnBookOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Return Book">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnTrackBorrowingHistory" layoutX="334.0" layoutY="541.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Track Borrowing History">
+      <JFXButton fx:id="btnTrackBorrowingHistory" layoutX="334.0" layoutY="541.0" onAction="#btnTrackBorrowingHistoryOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Track Borrowing History">
          <font>
             <Font size="16.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnCalculateFine" layoutX="587.0" layoutY="175.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Calculate Fine">
+      <JFXButton fx:id="btnCalculateFine" layoutX="587.0" layoutY="175.0" onAction="#btnCalculateFineOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Calculate Fine">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnPayFine" layoutX="587.0" layoutY="238.0" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Pay Fine">
+      <JFXButton fx:id="btnPayFine" layoutX="587.0" layoutY="238.0" onAction="#btnPayFineOnClick" prefHeight="51.0" prefWidth="202.0" style="-fx-background-color: white;" text="Pay Fine">
          <font>
             <Font size="24.0" />
          </font>
