@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
-import model.User;
+import model.Member;
 import util.CrudUtil;
 
 import java.net.URL;
@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddUserFormController implements Initializable {
+public class AddMemberFormController implements Initializable {
 
     @FXML
     private DatePicker dateMembershipDate;
@@ -35,18 +35,18 @@ public class AddUserFormController implements Initializable {
     private JFXTextField txtLastName;
 
     @FXML
-    private JFXTextField txtUserId;
+    private JFXTextField txtMemberId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        txtUserId.setEditable(false);
-        txtUserId.setText("User ID : "+getNextUserId());
+        txtMemberId.setEditable(false);
+        txtMemberId.setText("Member ID : "+getNextMemberId());
     }
 
     @FXML
     void btnAddOnClick(ActionEvent event) {
         if(isFilled() && isValidContactNumber()){
-            User user = new User(
+            Member member = new Member(
                     txtFirstName.getText(),
                     txtLastName.getText(),
                     txtAddress.getText(),
@@ -55,14 +55,14 @@ public class AddUserFormController implements Initializable {
                     dateMembershipDate.getValue()
             );
             try {
-                Boolean isAdded = CrudUtil.execute("INSERT INTO users(first_name, last_name, address, email, contact_number, membership_date) VALUES(?, ?, ?, ?, ?, ?)",
-                        user.getFirstName(), user.getLastName(), user.getAddress(), user.getEmail(), user.getContactNumber(), user.getMembershipDate());
+                Boolean isAdded = CrudUtil.execute("INSERT INTO members(first_name, last_name, address, email, contact_number, membership_date) VALUES(?, ?, ?, ?, ?, ?)",
+                        member.getFirstName(), member.getLastName(), member.getAddress(), member.getEmail(), member.getContactNumber(), member.getMembershipDate());
 
                 if (isAdded){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "User Added Successfully!");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Member Added Successfully!");
                     alert.showAndWait();
                 }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to add user! please tru again");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to add member! please try again");
                     alert.showAndWait();
                     return;
                 }
@@ -84,9 +84,9 @@ public class AddUserFormController implements Initializable {
     }
 
     //-----------------------Finding Next User Id------------------------
-    public String getNextUserId(){
+    public String getNextMemberId(){
         try {
-            ResultSet resultSet = CrudUtil.execute("SELECT * FROM users");
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM members");
 
             if(!resultSet.next()) return "1"; //if empty table, return 1
 
@@ -127,6 +127,6 @@ public class AddUserFormController implements Initializable {
         txtAddress.setText("");
         txtEmail.setText("");
         txtContactNumber.setText("");
-        txtUserId.setText("User ID : "+getNextUserId());
+        txtMemberId.setText("Member ID : "+getNextMemberId());
     }
 }

@@ -8,15 +8,15 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddUserFormController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddMemberFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#021f3b" height="69.0" layoutY="-10.0" stroke="#290b8e" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
-      <Label layoutX="224.0" layoutY="11.0" text="Add User" textFill="WHITE">
+      <Label layoutX="193.0" layoutY="14.0" text="Add Member" textFill="WHITE">
          <font>
             <Font name="Times New Roman Bold" size="37.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtUserId" layoutX="144.0" layoutY="106.0" prefHeight="26.0" prefWidth="126.0" promptText="User ID" />
+      <JFXTextField fx:id="txtMemberId" layoutX="144.0" layoutY="106.0" prefHeight="26.0" prefWidth="126.0" promptText="Member ID" />
       <JFXTextField fx:id="txtFirstName" layoutX="144.0" layoutY="141.0" prefHeight="26.0" prefWidth="310.0" promptText="First Name" />
       <JFXTextField fx:id="txtLastName" layoutX="144.0" layoutY="176.0" prefHeight="26.0" prefWidth="310.0" promptText="Last Name" />
       <JFXTextField fx:id="txtAddress" layoutX="144.0" layoutY="203.0" prefHeight="26.0" prefWidth="310.0" promptText="Address" />

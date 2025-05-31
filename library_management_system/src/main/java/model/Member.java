@@ -3,14 +3,13 @@ package model;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User {
+public class Member {
     private String firstName;
     private String lastName;
     private String address;
