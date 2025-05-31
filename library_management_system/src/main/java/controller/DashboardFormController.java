@@ -62,7 +62,7 @@ public class DashboardFormController {
     }
 
     @FXML
-    void btnAddUserOnClick(ActionEvent event) {
+    void btnAddMemberOnClick(ActionEvent event) {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/add_member_form_view.fxml"))));
@@ -85,12 +85,20 @@ public class DashboardFormController {
     }
 
     @FXML
-    void btnDeleteUserOnClick(ActionEvent event) {
+    void btnDeleteMemberOnClick(ActionEvent event) {
 
     }
 
     @FXML
     void btnIssueBookOnClick(ActionEvent event) {
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/issue_book_form_view.fxml"))));
+            stage.setTitle("Issue Book");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -110,7 +118,7 @@ public class DashboardFormController {
     }
 
     @FXML
-    void btnSearchUserOnClick(ActionEvent event) {
+    void btnSearchMemberOnClick(ActionEvent event) {
 
     }
 
@@ -125,7 +133,7 @@ public class DashboardFormController {
     }
 
     @FXML
-    void btnUpdateUserOnClick(ActionEvent event) {
+    void btnUpdateMemberOnClick(ActionEvent event) {
 
     }
 
