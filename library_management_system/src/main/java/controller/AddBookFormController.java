@@ -7,8 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import model.Book;
+import dto.Book;
+import service.ServiceFactory;
+import service.custom.BookService;
 import util.CrudUtil;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -48,6 +51,8 @@ public class AddBookFormController implements Initializable {
         txtBookId.setText("Book Id : "+getNextBookId());
     }
 
+    BookService bookService = ServiceFactory.getInstance().getServiceType(ServiceType.BOOK);
+
     @FXML
     void btnAddOnClick(ActionEvent event) {
         if (isFilled() && isValidNumbers()){
@@ -60,24 +65,16 @@ public class AddBookFormController implements Initializable {
                     Integer.parseInt(txtAvailableCopies.getText()),
                     combAvailabilityStatus.getValue()
             );
-            try {
-                Boolean isAdded = CrudUtil.execute("INSERT INTO books (isbn, title, author, genre, total_copies, available_copies, availability_status) VALUES (?, ?, ?, ?, ?, ?, ? )",
-                        book.getIsbn(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies(), book.getAvailableCopies(), book.getAvailabilityStatus()
-                );
+            boolean isAdded = bookService.addBook(book);
 
-                if(isAdded){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book Added Successfully");
-                    alert.showAndWait();
-
-                    txtBookId.setText("Book Id : "+getNextBookId());
-                    clearFields();
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Book adding failed! Please try again");
-                    alert.showAndWait();
-                    return;
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if (isAdded){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book added successfully!");
+                alert.showAndWait();
+                clearFields();
+                txtBookId.setText(getNextBookId());
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Book adding failed! Please try again");
+                alert.showAndWait();
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill all the fields!");
@@ -94,19 +91,7 @@ public class AddBookFormController implements Initializable {
     //-----------------------------Generating next User Id------------------------------
 
     public String getNextBookId(){
-        try {
-            ResultSet resultSet = CrudUtil.execute("SELECT * FROM books");
-            if(!resultSet.next()) return "1";
-
-            int id = 0;
-            while (resultSet.next()){
-                id++;
-            }
-            return (id + 2)+"";
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+       return bookService.getNextBookId();
     }
 
     //------------------------------Checking all the fields are filled-----------------------

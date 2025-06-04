@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
-import model.Member;
+import dto.Member;
 import util.CrudUtil;
 
 import java.net.URL;
