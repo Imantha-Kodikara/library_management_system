@@ -65,16 +65,20 @@ public class AddBookFormController implements Initializable {
                     Integer.parseInt(txtAvailableCopies.getText()),
                     combAvailabilityStatus.getValue()
             );
-            boolean isAdded = bookService.addBook(book);
 
-            if (isAdded){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book added successfully!");
-                alert.showAndWait();
-                clearFields();
-                txtBookId.setText(getNextBookId());
-            }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Book adding failed! Please try again");
-                alert.showAndWait();
+            try {
+                boolean isAdded = bookService.addBook(book);
+                if (isAdded){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book added successfully!");
+                    alert.showAndWait();
+                    clearFields();
+                    txtBookId.setText(getNextBookId());
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Book adding failed! Please try again");
+                    alert.showAndWait();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill all the fields!");
@@ -91,7 +95,11 @@ public class AddBookFormController implements Initializable {
     //-----------------------------Generating next User Id------------------------------
 
     public String getNextBookId(){
-       return bookService.getNextBookId();
+        try {
+            return bookService.getNextBookId();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //------------------------------Checking all the fields are filled-----------------------

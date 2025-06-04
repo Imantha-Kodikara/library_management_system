@@ -1,16 +1,21 @@
 package service.custom;
 
 import dto.Book;
+import javafx.collections.ObservableList;
 import service.SuperService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface BookService extends SuperService {
-    boolean addBook(Book book);
+    boolean addBook(Book book) throws SQLException;
     boolean updateBook(Book book);
     boolean deleteById(Integer bookID);
     Book searchById(Integer bookID);
     List<Book> getAll();
-    String getNextBookId();
-
+    String getNextBookId() throws SQLException;
+    boolean isAvailableBook(String bookTitle) throws SQLException;
+    ObservableList<String> getAllBooksTitles() throws SQLException;
+    int getBookId(String bookTitle) throws SQLException;
+    void reduceAvailableCopies(Integer bookId) throws SQLException;
 }

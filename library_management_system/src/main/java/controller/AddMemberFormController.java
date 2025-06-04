@@ -7,7 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import dto.Member;
+import service.ServiceFactory;
+import service.custom.MemberService;
 import util.CrudUtil;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -43,6 +46,8 @@ public class AddMemberFormController implements Initializable {
         txtMemberId.setText("Member ID : "+getNextMemberId());
     }
 
+    MemberService memberService = ServiceFactory.getInstance().getServiceType(ServiceType.MEMBER);
+
     @FXML
     void btnAddOnClick(ActionEvent event) {
         if(isFilled() && isValidContactNumber()){
@@ -54,21 +59,21 @@ public class AddMemberFormController implements Initializable {
                     txtContactNumber.getText(),
                     dateMembershipDate.getValue()
             );
-            try {
-                Boolean isAdded = CrudUtil.execute("INSERT INTO members(first_name, last_name, address, email, contact_number, membership_date) VALUES(?, ?, ?, ?, ?, ?)",
-                        member.getFirstName(), member.getLastName(), member.getAddress(), member.getEmail(), member.getContactNumber(), member.getMembershipDate());
 
-                if (isAdded){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Member Added Successfully!");
+            try {
+                boolean isAdded = memberService.addMember(member);
+
+                if(isAdded){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Member added successfully!");
                     alert.showAndWait();
                 }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to add member! please try again");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Member added failed! Please try again");
                     alert.showAndWait();
-                    return;
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
 
             clearTextFields();
         }else{
@@ -86,15 +91,7 @@ public class AddMemberFormController implements Initializable {
     //-----------------------Finding Next User Id------------------------
     public String getNextMemberId(){
         try {
-            ResultSet resultSet = CrudUtil.execute("SELECT * FROM members");
-
-            if(!resultSet.next()) return "1"; //if empty table, return 1
-
-            int id = 0;
-            while (resultSet.next()){
-                id++;
-            }
-            return (id+2)+""; //return id + 2
+            return memberService.getNextMemberId();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

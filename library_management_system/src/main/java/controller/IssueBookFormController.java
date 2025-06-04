@@ -9,7 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import dto.IssuedBook;
+import service.ServiceFactory;
+import service.custom.BookService;
+import service.custom.IssuedBookService;
+import service.custom.MemberService;
 import util.CrudUtil;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -33,6 +38,10 @@ public class IssueBookFormController implements Initializable {
         combSelectBookTitle.setItems(getAllBooksTitles());
     }
 
+    BookService bookService = ServiceFactory.getInstance().getServiceType(ServiceType.BOOK);
+    MemberService memberService = ServiceFactory.getInstance().getServiceType(ServiceType.MEMBER);
+    IssuedBookService issuedBookService = ServiceFactory.getInstance().getServiceType(ServiceType.ISSUED_BOOK);
+
     @FXML
     void btnClearOnClick(ActionEvent event) {
 
@@ -40,98 +49,85 @@ public class IssueBookFormController implements Initializable {
 
     @FXML
     void btnIssueOnClick(ActionEvent event) {
-        if (borrowedCount() < 3 && isAvailableBook()){
-            try {
-                ResultSet resultSet = CrudUtil.execute("SELECT book_id FROM books WHERE title = ?", combSelectBookTitle.getValue());
-                resultSet.next();
-                int bookId = resultSet.getInt(1);
-                IssuedBook issuedBook = new IssuedBook(
-                        combSelectMemberId.getValue(),
-                        bookId,
-                        dateIssuingDate.getValue()
-                );
+        Integer memberId = Integer.parseInt(String.valueOf(combSelectMemberId.getValue()));
+        String bookTitle = combSelectBookTitle.getValue();
+       if(borrowedCount(memberId) < 3 && isAvailableBook(bookTitle)){
+           IssuedBook issuedBook = new IssuedBook(
+                   memberId,
+                   getBookID(combSelectBookTitle.getValue()),
+                   dateIssuingDate.getValue()
+           );
+           try {
+               boolean isAdded = issuedBookService.addIssuedBook(issuedBook);
 
-                Boolean isAdded = CrudUtil.execute("INSERT INTO issued_books(member_id, book_id, issue_date) VALUES (?, ?, ?)",
-                        issuedBook.getMemberId(),
-                        issuedBook.getBookId(),
-                        issuedBook.getIssueDate()
-                        );
+               if (isAdded){
+                   Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book issued successfully!");
+                   alert.showAndWait();
 
-                if(isAdded){
-                    CrudUtil.execute("UPDATE books SET available_copies = available_copies - 1 WHERE book_id = ?", issuedBook.getBookId());
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book Issued Successfully");
-                    alert.showAndWait();
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Book Issuing Failed");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Book issuing failed! Please check borrowing count or book availability");
-            alert.showAndWait();
-        }
+                   //----------Reducing available book copies---------------------------------
+
+                   bookService.reduceAvailableCopies(getBookID(combSelectBookTitle.getValue()));
+               }else{
+                   Alert alert = new Alert(Alert.AlertType.ERROR, "Book Issuing failed! Please try again");
+                   alert.showAndWait();
+               }
+
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+           }
+       }else{
+           Alert alert = new Alert(Alert.AlertType.ERROR, "Book Issuing Failed! Please check member borrowed count or book availability");
+           alert.showAndWait();
+       }
     }
 
-    public ObservableList<Integer> getAllMembersId(){
-        ObservableList<Integer> membersId = FXCollections.observableArrayList(); //Creating observable arraylist to store users id;
-
-        try {
-            ResultSet resultSet = CrudUtil.execute("SELECT * FROM members");
-            while (resultSet.next()){
-                int memberId = resultSet.getInt(1);
-                membersId.add(memberId);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return membersId;
-    }
+    //------------To set up all book titles to combo box--------------------------------------
 
     public ObservableList<String> getAllBooksTitles(){
-        ObservableList<String> booksTitles = FXCollections.observableArrayList(); // creating observable arralist to store books title
         try {
-            ResultSet resultSet = CrudUtil.execute("SELECT * FROM books");
-            while (resultSet.next()){
-                String bookTitle = resultSet.getString(3);
-                booksTitles.add(bookTitle);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return booksTitles;
-    }
-
-    public int borrowedCount(){
-        try {
-            ResultSet resultSet = CrudUtil.execute("SELECT COUNT(*) AS borrowed_count FROM issued_books WHERE member_id = ? AND return_date IS NULL", combSelectMemberId.getValue()); // Creating temporary column to find how many books borrowed in same member
-            if(resultSet.next()){
-                return resultSet.getInt("borrowed_count");
-            }
-            return 0;
+            return bookService.getAllBooksTitles();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public boolean isAvailableBook(){
+    //--------------To setup all members id s to combo box-----------------------------------------
+
+    public ObservableList<Integer> getAllMembersId(){
         try {
-            ResultSet resultSet = CrudUtil.execute("SELECT available_copies FROM books WHERE title = ?", combSelectBookTitle.getValue());
-            if(resultSet.next()){
-                if(resultSet.getInt(1) > 0){
-                    return true;
-                }
-                return false;
-            }
+            return memberService.getAllMembersId();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
 
+//----------------------Checking book available or not-----------------------------------------------
 
+    public boolean isAvailableBook(String bookTitle){
+        try {
+            return bookService.isAvailableBook(bookTitle);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    //--------------------Calculating borrowing count--------------------------------------------------
 
+    public int borrowedCount(Integer memberId){
+        try {
+            return issuedBookService.borrowedCount(memberId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    //-----------------------To get book Id------------------------------------------------
+
+    public int getBookID(String bookTitle){
+        try {
+            return bookService.getBookId(bookTitle);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

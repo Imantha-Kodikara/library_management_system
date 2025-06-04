@@ -2,6 +2,8 @@ package repository.custom.impl;
 
 import dto.Book;
 import entity.BookEntity;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import repository.custom.BookRepository;
 import util.CrudUtil;
@@ -13,15 +15,10 @@ import java.util.List;
 public class BookRepositoryImpl implements BookRepository {
 
     @Override
-    public boolean add(BookEntity entity) {
-        try {
+    public boolean add(BookEntity entity) throws SQLException {
             return CrudUtil.execute("INSERT INTO books (isbn, title, author, genre, total_copies, available_copies, availability_status) VALUES (?, ?, ?, ?, ?, ?, ? )",
                     entity.getIsbn(), entity.getTitle(), entity.getAuthor(), entity.getGenre(), entity.getTotalCopies(), entity.getAvailableCopies(), entity.getAvailabilityStatus()
             );
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -59,6 +56,43 @@ public class BookRepositoryImpl implements BookRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean isAvailableBook(String bookTitle) throws SQLException {
+        ResultSet resultSet = CrudUtil.execute("SELECT available_copies FROM books WHERE title = ?", bookTitle);
+        if(resultSet.next()){
+            if(resultSet.getInt(1) > 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public ObservableList<String> getAllBooksTitle() throws SQLException {
+        ObservableList<String> booksTitles = FXCollections.observableArrayList(); //creating observable arraylist to store books titles
+
+        ResultSet resultSet = CrudUtil.execute("SELECT*FROM books");
+        while (resultSet.next()){
+            String bookTitle = resultSet.getString(3);
+            booksTitles.add(bookTitle);
+        }
+        return booksTitles;
+    }
+
+    @Override
+    public int getBookId(String bookTitle) throws SQLException {
+        ResultSet resultSet = CrudUtil.execute("SELECT book_id FROM books WHERE title = ?", bookTitle);
+        resultSet.next();
+        int bookId = resultSet.getInt(1);
+
+        return bookId;
+    }
+
+    @Override
+    public void reduceAvailableCopies(Integer bookId) throws SQLException {
+        CrudUtil.execute("UPDATE books SET available_copies = available_copies - 1 WHERE book_id = ?", bookId);
     }
 }
 
