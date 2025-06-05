@@ -68,4 +68,7 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberDetails(Integer memberId) throws SQLException {
         return null;
     }
+
+
+
 }

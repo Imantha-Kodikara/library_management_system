@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BookService extends SuperService {
     boolean addBook(Book book) throws SQLException;
-    boolean updateBook(Book book);
+    boolean updateBookAvailableCopies(Integer bookID) throws SQLException;
     boolean deleteById(Integer bookID);
     Book searchById(Integer bookID) throws SQLException;
     List<Book> getAll();

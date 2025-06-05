@@ -1,10 +1,8 @@
 package repository.custom.impl;
 
-import dto.Book;
 import entity.BookEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import repository.custom.BookRepository;
 import util.CrudUtil;
 
@@ -24,6 +22,11 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public boolean update(BookEntity entity) {
         return false;
+    }
+
+    @Override
+    public boolean updateBookAvailableCopies(Integer bookID) throws SQLException {
+        return CrudUtil.execute("UPDATE books SET available_copies = available_copies + 1 WHERE book_id = ?", bookID);
     }
 
     @Override

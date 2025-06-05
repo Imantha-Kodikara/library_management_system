@@ -39,4 +39,9 @@ public class IssuedBookServiceImpl implements IssuedBookService {
     public LocalDate getBookIssuedDate(Integer memberId, Integer bookId) throws SQLException {
         return issuedBookRepository.getBookIssuedDate(memberId, bookId);
     }
+
+    @Override
+    public boolean updateReturnedDateAndStatus(Integer memberId, Integer bookId, LocalDate returnedDate) throws SQLException {
+        return issuedBookRepository.updateReturnedDateAndStatus(memberId, bookId, returnedDate);
+    }
 }

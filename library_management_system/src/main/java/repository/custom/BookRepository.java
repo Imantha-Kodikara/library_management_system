@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface BookRepository extends CrudRepository<BookEntity, Integer> {
+    boolean updateBookAvailableCopies(Integer bookID) throws SQLException;
+
     boolean isAvailableBook(String bookTitle) throws SQLException;
 
     ObservableList<String> getAllBooksTitle() throws SQLException;

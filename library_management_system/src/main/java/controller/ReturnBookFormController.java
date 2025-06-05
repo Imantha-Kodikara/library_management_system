@@ -1,5 +1,6 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import dto.Book;
 import dto.Member;
 import javafx.collections.ObservableList;
@@ -19,10 +20,12 @@ import util.ServiceType;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class ReturnBookFormController implements Initializable {
+    @FXML
+    private JFXButton btnCompleteReturn;
 
     @FXML
     private ComboBox<Integer> combBookId;
@@ -58,6 +61,8 @@ public class ReturnBookFormController implements Initializable {
     IssuedBookService issuedBookService = ServiceFactory.getInstance().getServiceType(ServiceType.ISSUED_BOOK);
     MemberService memberService = ServiceFactory.getInstance().getServiceType(ServiceType.MEMBER);
     BookService bookService = ServiceFactory.getInstance().getServiceType(ServiceType.BOOK);
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         combMemberId.setItems(getAllIssuedBooksMembersId()); // Set values -> members Id s of already borrowed books
@@ -68,6 +73,9 @@ public class ReturnBookFormController implements Initializable {
                 combBookId.setItems(bookIds);// set values -> books Id s of already borrow from above selected member
             }
         });
+
+        btnCompleteReturn.setDisable(true);
+
     }
 
     @FXML
@@ -78,6 +86,28 @@ public class ReturnBookFormController implements Initializable {
         }else if(!isFilled()){
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select all the fields!");
         }else{
+            try {
+                Member member = memberService.searchById(combMemberId.getValue());
+                Book book = bookService.searchById(combBookId.getValue());
+                LocalDate issuedDate = issuedBookService.getBookIssuedDate(combMemberId.getValue(), combBookId.getValue());
+                LocalDate returningDate = dateReturningDate.getValue();
+                int daysBetween = (int) ChronoUnit.DAYS.between(issuedDate, returningDate); // Calculate the no of dates between issued date and returning date
+
+
+                lblMemberName.setText(member.getFirstName());
+                lblAddress.setText(member.getAddress());
+                lblContactNumber.setText(member.getContactNumber());
+                lblReturningBook.setText(book.getTitle());
+                lblIssuedDate.setText(String.valueOf(issuedDate));
+                lblReturningDate.setText(String.valueOf(returningDate));
+                lblTotalFine.setText(calculateFine(daysBetween));
+
+                btnCompleteReturn.setDisable(false);
+
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }
@@ -104,7 +134,6 @@ public class ReturnBookFormController implements Initializable {
         try {
             LocalDate returnDate = dateReturningDate.getValue();
             LocalDate issuedDate = issuedBookService.getBookIssuedDate(combMemberId.getValue(), combBookId.getValue());
-
             return issuedDate.isBefore(returnDate); //compare two dates
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -118,11 +147,33 @@ public class ReturnBookFormController implements Initializable {
     }
 
 
+    //------------------------Calculating fine-----------------------------------------
+
+    String calculateFine(int daysBetween){
+        return daysBetween > 14 ? ((daysBetween - 14) * 10) +"" : "00.00";
+    }
 
     @FXML
     void btnCompleteReturnOnClick(ActionEvent event) {
-
+        if(updateFields()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book Returned Successfully!");
+            alert.showAndWait();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Book returning failed!");
+            alert.showAndWait();
+        }
     }
+
+    boolean updateFields(){
+        try {
+          return  bookService.updateBookAvailableCopies(combBookId.getValue()) &&
+            issuedBookService.updateReturnedDateAndStatus(combMemberId.getValue(), combBookId.getValue(), dateReturningDate.getValue());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 
 }

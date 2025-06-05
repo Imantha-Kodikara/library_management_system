@@ -85,4 +85,9 @@ public class IssuedBookRepositoryImpl implements IssuedBookRepository {
         }
         return null;
     }
+
+    @Override
+    public boolean updateReturnedDateAndStatus(Integer memberId, Integer bookId, LocalDate returnedDate) throws SQLException {
+        return CrudUtil.execute("UPDATE issued_books SET return_date = ? , status = ? WHERE member_id = ? AND book_id = ?", returnedDate, "returned", memberId, bookId);
+    }
 }

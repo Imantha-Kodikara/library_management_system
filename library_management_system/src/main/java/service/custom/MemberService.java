@@ -17,4 +17,5 @@ public interface MemberService extends SuperService {
     String getNextMemberId() throws SQLException;
     ObservableList<Integer> getAllMembersId() throws SQLException;
     Member getMemberDetails(Integer memberId) throws SQLException;
+
 }

@@ -9,5 +9,4 @@ import java.sql.SQLException;
 
 public interface MemberRepository extends CrudRepository<MemberEntity, Integer> {
     ObservableList<Integer> getAllMembersId() throws SQLException;
-
 }

@@ -9,7 +9,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReturnBookFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#021f3b" height="69.0" stroke="#290b8e" strokeType="INSIDE" strokeWidth="0.0" width="603.0" />
@@ -38,6 +37,6 @@
       <Label fx:id="lblIssuedDate" layoutX="431.0" layoutY="234.0" prefHeight="18.0" prefWidth="104.0" text="-" />
       <Label fx:id="lblReturningDate" layoutX="431.0" layoutY="255.0" prefHeight="18.0" prefWidth="104.0" text="-" />
       <Label fx:id="lblTotalFine" layoutX="431.0" layoutY="277.0" prefHeight="18.0" prefWidth="104.0" text="00.00" textFill="RED" />
-      <JFXButton layoutX="444.0" layoutY="345.0" onAction="#btnCompleteReturnOnClick" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #290b8e;" text="Complete Return" textFill="WHITE" />
+      <JFXButton fx:id="btnCompleteReturn" layoutX="444.0" layoutY="345.0" onAction="#btnCompleteReturnOnClick" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #290b8e;" text="Complete Return" textFill="WHITE" />
    </children>
 </AnchorPane>

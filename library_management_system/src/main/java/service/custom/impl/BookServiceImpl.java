@@ -22,8 +22,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean updateBook(Book book) {
-        return false;
+    public boolean updateBookAvailableCopies(Integer bookID) throws SQLException {
+        return bookRepository.updateBookAvailableCopies(bookID);
     }
 
     @Override
