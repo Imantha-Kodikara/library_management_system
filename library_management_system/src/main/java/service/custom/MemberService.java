@@ -12,8 +12,9 @@ public interface MemberService extends SuperService {
     boolean addMember(Member member) throws SQLException;
     boolean updateMember(Member member);
     boolean deleteById(Integer memberID);
-    Book searchById(Integer memberID);
-    List<Book> getAll();
+    Member searchById(Integer memberID) throws SQLException;
+    List<Member> getAll();
     String getNextMemberId() throws SQLException;
     ObservableList<Integer> getAllMembersId() throws SQLException;
+    Member getMemberDetails(Integer memberId) throws SQLException;
 }

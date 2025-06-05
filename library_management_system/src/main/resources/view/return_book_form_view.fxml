@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReturnBookFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#021f3b" height="69.0" stroke="#290b8e" strokeType="INSIDE" strokeWidth="0.0" width="603.0" />
+      <JFXButton layoutX="112.0" layoutY="345.0" onAction="#btnCheckFineDetailsOnClick" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #290b8e;" text="Check Fine Details" textFill="WHITE" />
+      <Label layoutX="217.0" layoutY="20.0" text="Return Book" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold" size="37.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="combMemberId" layoutX="25.0" layoutY="142.0" prefHeight="26.0" prefWidth="206.0" promptText="Select Member ID" />
+      <ComboBox fx:id="combBookId" layoutX="25.0" layoutY="196.0" prefHeight="26.0" prefWidth="206.0" promptText="Select Book ID" />
+      <DatePicker fx:id="dateReturningDate" layoutX="25.0" layoutY="247.0" prefHeight="26.0" prefWidth="205.0" promptText="Select Returning Date" />
+      <Line endX="-99.99996948242188" endY="193.4000244140625" layoutX="381.0" layoutY="177.0" startX="-99.99996948242188" startY="-93.80000305175781" />
+      <Label layoutX="301.0" layoutY="147.0" prefHeight="18.0" prefWidth="104.0" text="Member Name   " />
+      <Label layoutX="301.0" layoutY="169.0" prefHeight="18.0" prefWidth="104.0" text="Address               " />
+      <Label layoutX="301.0" layoutY="191.0" prefHeight="18.0" prefWidth="104.0" text="Contact Number " />
+      <Label layoutX="301.0" layoutY="212.0" prefHeight="18.0" prefWidth="104.0" text="Returning Book   " />
+      <Label layoutX="301.0" layoutY="234.0" prefHeight="18.0" prefWidth="104.0" text="Issued Date         " />
+      <Label layoutX="301.0" layoutY="255.0" prefHeight="18.0" prefWidth="104.0" text="Returning Date   " />
+      <Label layoutX="301.0" layoutY="277.0" prefHeight="18.0" prefWidth="104.0" text="Total Fine (LKR)" />
+      <Line endX="-99.99996948242188" endY="80.0" layoutX="508.0" layoutY="230.0" startX="-99.99996948242188" startY="-93.80000305175781" stroke="#3f17e1" />
+      <Label fx:id="lblMemberName" layoutX="431.0" layoutY="147.0" prefHeight="18.0" prefWidth="104.0" text="-" />
+      <Label fx:id="lblAddress" layoutX="431.0" layoutY="169.0" prefHeight="18.0" prefWidth="104.0" text="-" />
+      <Label fx:id="lblContactNumber" layoutX="431.0" layoutY="191.0" prefHeight="18.0" prefWidth="104.0" text="-" />
+      <Label fx:id="lblReturningBook" layoutX="431.0" layoutY="213.0" prefHeight="18.0" prefWidth="104.0" text="-" />
+      <Label fx:id="lblIssuedDate" layoutX="431.0" layoutY="234.0" prefHeight="18.0" prefWidth="104.0" text="-" />
+      <Label fx:id="lblReturningDate" layoutX="431.0" layoutY="255.0" prefHeight="18.0" prefWidth="104.0" text="-" />
+      <Label fx:id="lblTotalFine" layoutX="431.0" layoutY="277.0" prefHeight="18.0" prefWidth="104.0" text="00.00" textFill="RED" />
+      <JFXButton layoutX="444.0" layoutY="345.0" onAction="#btnCompleteReturnOnClick" prefHeight="26.0" prefWidth="118.0" style="-fx-background-color: #290b8e;" text="Complete Return" textFill="WHITE" />
+   </children>
+</AnchorPane>

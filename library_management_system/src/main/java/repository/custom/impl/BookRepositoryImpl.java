@@ -32,7 +32,19 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public BookEntity searchById(Integer integer) {
+    public BookEntity searchById(Integer bookID) throws SQLException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM books WHERE book_id = ?", bookID);
+        if(resultSet.next()){
+            return new BookEntity(
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getInt(6),
+                    resultSet.getInt(7),
+                    resultSet.getString(8)
+            );
+        }
         return null;
     }
 

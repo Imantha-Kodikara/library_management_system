@@ -1,11 +1,14 @@
 package repository.custom.impl;
 
 import entity.IssuedBooksEntity;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import repository.custom.IssuedBookRepository;
 import util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class IssuedBookRepositoryImpl implements IssuedBookRepository {
@@ -51,4 +54,35 @@ public class IssuedBookRepositoryImpl implements IssuedBookRepository {
         }
             return 0;
         }
+
+    @Override
+    public ObservableList<Integer> getAllIssuedBooksMembersId() throws SQLException {
+        ObservableList<Integer> issuedBooksMembersId = FXCollections.observableArrayList();
+        ResultSet resultSet = CrudUtil.execute("SELECT DISTINCT member_id FROM issued_books WHERE status = ?", "issued");
+        while (resultSet.next()){
+            int memberId = resultSet.getInt(1);
+            issuedBooksMembersId.add(memberId);
+        }
+        return issuedBooksMembersId;
+    }
+
+    @Override
+    public ObservableList<Integer> getIssuedBooksForMembers(Integer id) throws SQLException {
+        ObservableList<Integer> issuedBooksForMembers = FXCollections.observableArrayList();
+        ResultSet resultSet = CrudUtil.execute("SELECT book_id FROM issued_books WHERE member_id = ? AND status = ?", id, "issued");
+        while (resultSet.next()){
+            int bookId = resultSet.getInt(1);
+            issuedBooksForMembers.add(bookId);
+        }
+        return issuedBooksForMembers;
+    }
+
+    @Override
+    public LocalDate getBookIssuedDate(Integer memberId, Integer bookId) throws SQLException {
+        ResultSet resultSet = CrudUtil.execute("SELECT issue_date FROM issued_books WHERE member_id = ? AND book_id = ? AND status = ?", memberId, bookId, "issued");
+        if(resultSet.next()){
+            return resultSet.getDate(1).toLocalDate();
+        }
+        return null;
+    }
 }

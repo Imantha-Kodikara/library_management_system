@@ -109,7 +109,15 @@ public class DashboardFormController {
 
     @FXML
     void btnReturnBookOnClick(ActionEvent event) {
-
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/return_book_form_view.fxml"))));
+            stage.setTitle("Return Book");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

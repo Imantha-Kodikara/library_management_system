@@ -32,8 +32,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book searchById(Integer bookID) {
-        return null;
+    public Book searchById(Integer bookID) throws SQLException {
+
+        BookEntity bookEntity = bookRepository.searchById(bookID);
+        return  new Book(
+                bookEntity.getIsbn(),
+                bookEntity.getTitle(),
+                bookEntity.getAuthor(),
+                bookEntity.getGenre(),
+                bookEntity.getTotalCopies(),
+                bookEntity.getAvailableCopies(),
+                bookEntity.getAvailabilityStatus()
+        );
     }
 
     @Override

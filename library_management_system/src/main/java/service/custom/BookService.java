@@ -11,7 +11,7 @@ public interface BookService extends SuperService {
     boolean addBook(Book book) throws SQLException;
     boolean updateBook(Book book);
     boolean deleteById(Integer bookID);
-    Book searchById(Integer bookID);
+    Book searchById(Integer bookID) throws SQLException;
     List<Book> getAll();
     String getNextBookId() throws SQLException;
     boolean isAvailableBook(String bookTitle) throws SQLException;

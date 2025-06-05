@@ -1,5 +1,6 @@
 package repository.custom.impl;
 
+import dto.Member;
 import entity.MemberEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +29,19 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public MemberEntity searchById(Integer integer) {
+    public MemberEntity searchById(Integer memberId) throws SQLException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM members WHERE member_id = ?", memberId);
+
+        if(resultSet.next()){
+            return new MemberEntity(
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getDate(7).toLocalDate()
+            );
+        }
         return null;
     }
 
@@ -61,4 +74,5 @@ public class MemberRepositoryImpl implements MemberRepository {
         }
         return membersId;
     }
+
 }
